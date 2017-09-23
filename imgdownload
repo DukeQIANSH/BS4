@@ -1,0 +1,14 @@
+import requests
+from bs4 import BeautifulSoup
+import shutil
+url = XXXX
+res = requests.get(url)
+soup = BeautifulSoup(res.text)
+for img in soup.select('img'):
+    fname = img['src'].split('/')[-1]
+    print img['src'],
+    res2 = requests.get(img['src'],stream=True)
+    f = open(fname,'wb')
+    shutil.copyfileobj(res2.raw,f)
+    f.close()
+    del res2    
